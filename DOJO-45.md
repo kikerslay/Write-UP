@@ -41,7 +41,7 @@ await Users.update(
  
 The input requires valid JSON, validated by the function `getJsonInput()`. If the input is not valid JSON, the application returns an error message:
 
-<img src=""YWH-R703411-image.png"">
+<img src="src/image/"YWH-R703411-image.png"">
 
 `await Users.update()` updates the user with `id = 2`, so we only need to craft a SQL payload to manipulate that user’s attachment and content. The `Users.findOne()` call is the vulnerable part (SQL injection) because it uses sequelize.literal(... :updatedat ...) combined with replacements. See details here: https://github.com/sequelize/sequelize/issues/14519
 
@@ -93,7 +93,7 @@ We observed application error messages useful for debugging, e.g.:
 
 Now that we can select the intended user, we used path traversal / sanitization-bypass techniques on attachment to overwrite /tmp/view/index.ejs (the rendered template). After writing an attacker-controlled template, rendering /tmp/view/index.ejs executed the payload.
 
-<img src=""YWH-R703534-image.png"">
+<img src="src/image/"YWH-R703534-image.png"">
 
 We successfully overwrote the view and displayed “bonjour”!
 
@@ -106,7 +106,7 @@ fs.writeFileSync(`flag_${crypto.randomBytes(16).toString('hex')}.txt`, flag);
 ```
 For that, we need to use globbing in Node.js
 
-<img src=""YWH-R703540-image.png"">
+<img src="src/image/"YWH-R703540-image.png"">
 
 Unfortunately we can't use `require` directly, so we used `process.mainModule`:
 
@@ -115,7 +115,7 @@ process.mainModule.require('fs').readFileSync(process.mainModule.require('glob')
 ```
 Submit : 
 
-<img src=""YWH-R703600-image.png"">
+<img src="src/image/"YWH-R703600-image.png"">
 
 ### Flag :  FLAG{Bug_C4ins_Br1ng5_Th3_B3st_Imp4ct}
 ## Risk
